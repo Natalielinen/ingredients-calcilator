@@ -34,9 +34,10 @@ export default class Calculator {
                 unit: 'ч. л.'
             },
         ]
+        this.newIngredientsCount = []
     }
 
-    reCountIngredients (newPortions, newIngredientsCount ) {
-        return newIngredientsCount = this.defaultIngredientsList.map(c => Math.trunc((c.count / this.defaultPortions) * newPortions))
+    reCountIngredients (newPortions) {
+        return this.newIngredientsCount = this.defaultIngredientsList.map(c => Math.trunc((c.count / this.defaultPortions) * +newPortions))
     }
 }

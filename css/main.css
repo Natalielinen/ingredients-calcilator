@@ -34,3 +34,8 @@
     background: none;
     cursor: pointer;
 }
+
+.ingredients {
+    display: flex;
+    justify-content: space-around;
+}

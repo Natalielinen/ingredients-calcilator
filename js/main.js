@@ -1,13 +1,20 @@
 import Calculator from './Calculator.js'
 import CalculatorView from './CalculatorView.js'
 
-
 let calculator = new Calculator()
 let calculatorView = new CalculatorView(document.getElementById('app'))
-calculatorView.firstRender(calculator)
+calculatorView.render(calculator)
 
 calculatorView.onCountButtonClick = function () {
-    calculatorView.update(calculator)
+    calculatorView.getNewIngredientsCount(calculator)
+    calculator.reCountIngredients(calculatorView.getUsersPortions())
 }
 
-console.log(calculator.reCountIngredients(4, []))
+calculatorView.onOkBtnClick = function () {
+    calculatorView.getUsersPortions()
+}
+
+calculatorView.onRestartClick = function () {
+    calculatorView.render(calculator)
+}
+
