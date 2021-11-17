@@ -3,15 +3,27 @@ import CalculatorView from './CalculatorView.js'
 
 let calculator = new Calculator()
 let calculatorView = new CalculatorView(document.getElementById('app'))
-calculatorView.render(calculator)
+
 
 
 calculatorView.onAddRecipeBtnClick = function () {
     calculatorView.addNewRecipe(calculator)
-   // console.log('recipe added')
+}
+
+calculatorView.onAddIngredientBtnClick = function () {
+    calculatorView.addNewIngredient(calculator)
+}
+
+calculatorView.onAddNewPortionsCountBtnClick = function () {
+    calculatorView.addNewPortionsCount()
+}
+
+calculatorView.onRecountBtnClick = function () {
+    calculatorView.getRecountedIngredientsList(calculator)
 }
 
 calculatorView.onRestartClick = function () {
-    calculatorView.render(calculator)
+    console.log('restarted')
+    calculatorView.refresh(calculator)
 }
 

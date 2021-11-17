@@ -43,3 +43,7 @@
 label {
     display: block;
 }
+
+.alert {
+    border: 2px solid red;
+}
