@@ -1,8 +1,6 @@
 export default class CalculatorView {
     constructor(root) {
         this.root = root
-        //todo: добавить кнопку + добавить новый ингредиент, по нажатию на нее появляется новое поле добавления ингредиента
-        //todo: добавлять можно не больше 10 ингредиентов!!! Когда есть уже 10 ингредиентов кнопка + исчезает
         //todo: инпут с названием рецепта
         //todo: инпут с дефолтным значением порций (от которого плясать)
         //todo: добавить стили
@@ -10,18 +8,21 @@ export default class CalculatorView {
         //todo: добавить описание калькулятора, для чего он нужен и как пользоваться (но это не точно) надо подумать
         this.root.innerHTML = `
            <div class="header">
-              <div class="header__title"></div>
               <div class="header__portions"></div>
               <button type="button" class="header__restart">
                   <i class="material-icons">refresh</i>
                </button>
            </div>
-           <div class="inputs">
-              <div class="inputs__portions">
-                <label>Количество порций<input type="number"></label>
-                <button class="inputs__ok-btn">OK</button>
+           <div class="add-recipe">  
+             <h2>Добавьте рецепт</h2>
+              <div ><label>Название рецепта<input type="text" class="add-recipe__title"></label></div>        
+              <div class="add-recipe__portions">            
+                <label>Сколько порций<input type="number" class="start-portions-count"></label>             
               </div>
-              <div>
+              <div><button class="add-recipe">Добавить рецепт</button></div>
+              
+              <div class="add-ingredients">
+              <p>Добавьте ингредиент</p>
                 <label>Название<input type="text"></label>
                 <label>Количество<input type="number"></label>
                 Мера веса <select name="units" id="units">
@@ -33,54 +34,53 @@ export default class CalculatorView {
                              <option value="cup">ст.</option>
                           </select>
               </div>                      
-              <button type="button" class="inputs__count">Рассчитать</button>
+              <button type="button" class="inputs__add-btn">Добавить</button>
            </div>
+           
+           <div class="new-portions-count">
+           <label>На сколько порций рассчитать<input type="number"></label>
+           </div>
+           
            <div class="ingredients">
            <div>
-              <p>Начальное количество</p>
+              <p class="recipe-title">Название рецепта </p><span class="default-portions"></span>
                <ul class="ingredients__list default"></ul>
               </div>
                <div>
-               <p>Новое количество</p>
+               <p class="recipe-title">Название рецепта</p><span class="new-portions">4</span> порции
                  <ul class="ingredients__list new"></ul>
                </div>
            </div>
         `
         this.onCountButtonClick = undefined
         this.onRestartClick = undefined
-        this.onOkBtnClick = undefined
 
-        this.root.querySelector('.inputs__count').addEventListener('click', () => {
+        this.onAddRecipeBtnClick = undefined
+
+        this.root.querySelector('.inputs__add-btn').addEventListener('click', () => {
             this.onCountButtonClick()
         })
         this.root.querySelector('.header__restart').addEventListener('click', () => {
             this.onRestartClick()
         })
-        this.root.querySelector('.inputs__ok-btn').addEventListener('click', () => {
-            this.onOkBtnClick()
-        })
 
+        this.root.querySelector('.add-recipe').addEventListener('click', () => {
+            this.onAddRecipeBtnClick()
+        })
     }
 
     render(calc) {
-        this.root.querySelector('.header__title').textContent = calc.defaultTitle
-        this.root.querySelector('.header__portions').textContent = `${calc.defaultPortions} порций`
+        this.root.querySelectorAll('.recipe-title').forEach(recipe => recipe.textContent = calc.defaultTitle)
+        this.root.querySelector('.default-portions').textContent = `${calc.defaultPortions} порций`
         this.root.querySelector('.default')
             .innerHTML = calc.defaultIngredientsList
             .map(i => `<li><span>${i.name} - </span><span>${i.count} </span><span>${i.unit}</span></li>`).join('')
         this.root.querySelector('.new').innerHTML = [].map(v => `<li>${v}</\li>`).join('')
-        this.root.querySelector('.inputs__portions').querySelector('input').value = ''
     }
 
-    getUsersPortions() {
-        let inputValue = this.root.querySelector('.inputs__portions').querySelector('input').value
-        this.root.querySelector('.header__portions').textContent = `${inputValue} порций`
-        return inputValue
-    }
+   addNewRecipe (calc) {
+       console.log(this.root.querySelector('.add-recipe__title').value)
 
-    getNewIngredientsCount(calc) {
-        let newValues = calc.reCountIngredients(this.root.querySelector('.inputs__portions').querySelector('input').value)
-        this.root.querySelector('.new').innerHTML = newValues.map(v => `<li>${v}</\li>`).join('')
-    }
+   }
 
 }

@@ -6,7 +6,7 @@
     margin: 0 auto;
     border: 1px solid black;
     width: 1000px;
-    height: 500px;
+    height: auto;
     font-family: sans-serif;
     font-weight: bold;
     display: flex;
@@ -38,4 +38,8 @@
 .ingredients {
     display: flex;
     justify-content: space-around;
+}
+
+label {
+    display: block;
 }
