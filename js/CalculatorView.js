@@ -1,5 +1,4 @@
 export default class CalculatorView {
-    //todo: сделать нормальное отображение пересчитанных ингредиентов с названиями и мерами веса
     constructor(root) {
         this.root = root
         this.root.innerHTML = `
@@ -61,15 +60,14 @@ export default class CalculatorView {
         <div>
             <p class="recipe-title">Название рецепта</p><span>на <span class="new-portions-span">0</span> порции</span>
             <ul class="ingredients__list new"></ul>
-        </div></div>
+        </div>
+        </div>
     </section>           
         `
-
         this.onRestartClick = undefined
         this.onAddRecipeBtnClick = undefined
         this.onAddIngredientBtnClick = undefined
         this.onRecountBtnClick = undefined
-
 
         this.root.querySelector('.header__restart').addEventListener('click', () => {
             this.onRestartClick()
@@ -82,7 +80,6 @@ export default class CalculatorView {
         this.root.querySelector('.add-ingredient-btn').addEventListener('click', () => {
             this.onAddIngredientBtnClick()
         })
-
 
         this.root.querySelector('.recount-btn').addEventListener('click', () => {
             this.onRecountBtnClick()
@@ -133,7 +130,7 @@ export default class CalculatorView {
 
             this.root.querySelector('.default')
                 .innerHTML = calc.defaultIngredientsList
-                .map(i => `<li><span>${i.name} - </span><span>${i.count} </span><span>${i.unit}</span></li>`).join('')
+                .map(i => `<li><span class="current-name">${i.name} - </span><span>${i.count} </span><span>${i.unit}</span></li>`).join('')
         }
 
         ingredientTitleInput.value = ''
@@ -141,18 +138,19 @@ export default class CalculatorView {
 
     }
 
-
     getRecountedIngredientsList (calc) {
         let newPortionsCount = this.root.querySelector('.new-portions-span')
         let newIngredientsList = this.root.querySelector('.new')
 
-        calc.reCountIngredients(+newPortionsCount.textContent).map(item => {
-            newIngredientsList.innerHTML += `<li>${item}</li>`
-        }).join('')
+         if (calc.defaultIngredientsList.length > 0) {
+             calc.reCountIngredients(+newPortionsCount.textContent).map(item => {
+                 newIngredientsList.innerHTML += `<li>${item}</li>`
+             }).join('')
 
-        this.root.querySelector('.recount-btn').disabled = true
-        this.root.querySelector('.add-ingredient-btn').disabled = true
-        this.root.querySelector('.add-recipe-btn').disabled = true
+             this.root.querySelector('.recount-btn').disabled = true
+             this.root.querySelector('.add-ingredient-btn').disabled = true
+             this.root.querySelector('.add-recipe-btn').disabled = true
+         }
 
     }
 

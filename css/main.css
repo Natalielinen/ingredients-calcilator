@@ -163,6 +163,12 @@ select {
     .add-ingredient-btn {
         grid-row: 3/4;
     }
+
+    #start-portions-count,
+    #ingredient-count,
+    select {
+        width: 60px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -181,6 +187,11 @@ select {
 
     table {
         width: 75vw;
+    }
+    #start-portions-count,
+    #ingredient-count,
+    select {
+        width: 60px;
     }
 }
 .alert {
