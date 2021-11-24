@@ -7,6 +7,6 @@ export default class Calculator {
     }
 
     reCountIngredients (newPortions) {
-        return this.newIngredientsCount = this.defaultIngredientsList.map(c => Math.trunc((c.count / this.defaultPortions) * +newPortions))
+        return this.newIngredientsCount = this.defaultIngredientsList.map(c => ((c.count / this.defaultPortions) * +newPortions).toFixed(2))
     }
 }

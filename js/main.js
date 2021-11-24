@@ -4,8 +4,6 @@ import CalculatorView from './CalculatorView.js'
 let calculator = new Calculator()
 let calculatorView = new CalculatorView(document.getElementById('app'))
 
-
-
 calculatorView.onAddRecipeBtnClick = function () {
     calculatorView.addNewRecipe(calculator)
 }
