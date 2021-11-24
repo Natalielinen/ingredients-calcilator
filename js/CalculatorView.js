@@ -1,4 +1,5 @@
 export default class CalculatorView {
+    //todo: сделать нормальное отображение пересчитанных ингредиентов с названиями и мерами веса
     constructor(root) {
         this.root = root
         this.root.innerHTML = `
@@ -50,56 +51,45 @@ export default class CalculatorView {
             </div>
         </section>
     </section>
-    <section class="ingredients">
-        <table class="ingredients__table">
-            <thead>
-            <tr>
-                <td class="recipe-title">Рецепт</td>
-                <td class="default-portions">На <span>6</span> порций</td>
-                <td class="new-portions">На <span>4</span> порции</td>
-                <td>Мера веса</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Мука</td>
-                <td>100</td>
-                <td>20</td>
-                <td>грамм</td>
-            </tr>
-            </tbody>
-        </table>
-    </section>         
+    <section class="ingredients-block">
+    <button class="recount-btn">Рассчитать</button>
+    
+     <div class="ingredients"><div>
+            <p class="recipe-title">Название рецепта</p><span>на <span class="default-portions">0</span> порции</span>
+            <ul class="ingredients__list default"></ul>
+        </div>
+        <div>
+            <p class="recipe-title">Название рецепта</p><span>на <span class="new-portions-span">0</span> порции</span>
+            <ul class="ingredients__list new"></ul>
+        </div></div>
+    </section>           
         `
-        this.onRestartClick = undefined //todo: to fix
-        this.onAddRecipeBtnClick = undefined //готово
+
+        this.onRestartClick = undefined
+        this.onAddRecipeBtnClick = undefined
         this.onAddIngredientBtnClick = undefined
-        this.onAddNewPortionsCountBtnClick = undefined
         this.onRecountBtnClick = undefined
 
 
-        /*this.root.querySelector('.header__restart').addEventListener('click', () => {
+        this.root.querySelector('.header__restart').addEventListener('click', () => {
             this.onRestartClick()
-        })*/
+        })
 
         this.root.querySelector('.add-recipe-btn').addEventListener('click', () => {
             this.onAddRecipeBtnClick()
         })
 
-        /*this.root.querySelector('.inputs__add-ingredient-btn').addEventListener('click', () => {
+        this.root.querySelector('.add-ingredient-btn').addEventListener('click', () => {
             this.onAddIngredientBtnClick()
         })
 
-        this.root.querySelector('.new-portions-count__btn').addEventListener('click', () => {
-            this.onAddNewPortionsCountBtnClick()
-        })
 
-        this.root.querySelector('#recount').addEventListener('click', () => {
+        this.root.querySelector('.recount-btn').addEventListener('click', () => {
             this.onRecountBtnClick()
-        })*/
+        })
     }
 
-    addNewRecipe(calc) { // готово
+    addNewRecipe(calc) {
         let titleInput = this.root.querySelector('#add-recipe__title')
         let portionsInput = this.root.querySelector('#start-portions-count')
         let newPortionsCountInput = this.root.querySelector('#new-portions-count')
@@ -113,15 +103,15 @@ export default class CalculatorView {
             portionsInput.classList.remove('alert')
             newPortionsCountInput.classList.remove('alert')
 
-            this.root.querySelector('.recipe-title').textContent = titleInput.value
-            this.root.querySelector('.default-portions').textContent = `На ${portionsInput.value} порций`
-            this.root.querySelector('.new-portions').textContent = `На ${newPortionsCountInput.value} порций`
+            this.root.querySelectorAll('.recipe-title').forEach(r => r.textContent = titleInput.value)
+            this.root.querySelector('.default-portions').textContent = portionsInput.value
+            this.root.querySelector('.new-portions-span').textContent = newPortionsCountInput.value
             calc.defaultPortions = +portionsInput.value
 
             titleInput.value = ''
             portionsInput.value = ''
         }
-    } // готово
+    }
 
     addNewIngredient(calc) {
         let ingredientTitleInput = this.root.querySelector('#ingredient-title')
@@ -148,6 +138,7 @@ export default class CalculatorView {
 
         ingredientTitleInput.value = ''
         ingredientCountInput.value = ''
+
     }
 
 
@@ -158,6 +149,11 @@ export default class CalculatorView {
         calc.reCountIngredients(+newPortionsCount.textContent).map(item => {
             newIngredientsList.innerHTML += `<li>${item}</li>`
         }).join('')
+
+        this.root.querySelector('.recount-btn').disabled = true
+        this.root.querySelector('.add-ingredient-btn').disabled = true
+        this.root.querySelector('.add-recipe-btn').disabled = true
+
     }
 
     refresh(calc) {
@@ -171,6 +167,13 @@ export default class CalculatorView {
         let newIngredientsList = this.root.querySelector('.new')
        newIngredientsList.innerHTML = ''
         this.root.querySelectorAll('.recipe-title').forEach(r => r.textContent = 'Название рецепта')
+
+        this.root.querySelector('.recount-btn').disabled = false
+        this.root.querySelector('.add-ingredient-btn').disabled = false
+        this.root.querySelector('.add-recipe-btn').disabled = false
+        this.root.querySelector('#ingredient-title').value = ''
+        this.root.querySelector('#ingredient-count').value = ''
+        this.root.querySelector('#new-portions-count').value = ''
     }
 
 }

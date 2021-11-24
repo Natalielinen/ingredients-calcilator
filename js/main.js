@@ -12,16 +12,11 @@ calculatorView.onAddIngredientBtnClick = function () {
     calculatorView.addNewIngredient(calculator)
 }
 
-calculatorView.onAddNewPortionsCountBtnClick = function () {
-    calculatorView.addNewPortionsCount()
-}
-
 calculatorView.onRecountBtnClick = function () {
     calculatorView.getRecountedIngredientsList(calculator)
 }
 
 calculatorView.onRestartClick = function () {
-    console.log('restarted')
     calculatorView.refresh(calculator)
 }
 

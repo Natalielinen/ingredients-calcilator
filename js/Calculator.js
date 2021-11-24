@@ -1,8 +1,10 @@
 export default class Calculator {
     constructor() {
         this.defaultPortions = 0
+
         this.defaultIngredientsList = [
         ]
+
         this.newIngredientsCount = []
     }
 
